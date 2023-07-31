@@ -25,7 +25,7 @@ const InputPage = () => {
         else{
             console.log('good')
             console.log(link)
-            //navigate('/joinCall', {state: {link}})
+            navigate('/joinCall', {state: {link}})
         }
     }
 
