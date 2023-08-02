@@ -29,20 +29,20 @@ function ensureGraphForAppOnlyAuth() {
   }
 }
 
-async function createNewMeetingAsync(userId) {
+async function createNewMeetingAsync(userId, start, end, subject) {
     ensureGraphForAppOnlyAuth();
     let startTime = await startDateTimeAsync();
     let endTime = await endDateTimeAsync();
     const newMeeting = `/users/${userId}/calendar/events`;
     
     const event = {
-      subject: 'Customer Service Meeting',
+      subject: subject,
       start: {
-          dateTime: startTime,
+          dateTime: start,
           timeZone: 'UTC'
       },
       end: {
-          dateTime: endTime,
+          dateTime: end,
           timeZone: 'UTC'
       },
       isOnlineMeeting: true

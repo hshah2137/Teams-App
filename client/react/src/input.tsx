@@ -8,6 +8,8 @@ const InputPage = () => {
 
     const navigate = useNavigate();
 
+    const [errorMessage, setError] = useState('');
+
     const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         if (event.target.value != null) {
             setLink(event.target.value);   
@@ -19,12 +21,14 @@ const InputPage = () => {
     const clickHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
         event.preventDefault()
         if (link === ''){
+            setError('Please enter a teams link')
             console.log('cannot proceed')
 
         }
         else{
             console.log('good')
             console.log(link)
+            setError("")
             navigate('/joinCall', {state: {link}})
         }
     }
@@ -56,7 +60,7 @@ const InputPage = () => {
             <h1 style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: "2vh"}}>Please enter the teams meeting link</h1>
             <form>
                 
-                <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: "10vh"}}>
+                <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: "7.5vh"}}>
                 
                 <textarea value={link} onChange={handleInputChange} style = {{marginLeft:"2.5vw", width: "75vw", resize: 'none'}} rows={5} />
                 
@@ -69,8 +73,13 @@ const InputPage = () => {
                     onMouseLeave={handleMouseLeave}>
                     Confirm
                 </button>
+                
                 </div>
+
             </form>
+            <div style = {{marginTop: '2vh'}}>
+            <text style = {{color: 'red'}}>{errorMessage}</text>
+            </div>
       </div>   
     );
 

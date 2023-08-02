@@ -12,8 +12,9 @@ const App = () => {
       <Routes>
 
        
-        <Route path = '/' element = {<InputPage/>} />
-        <Route path = 'joinCall' element = {<JoinCallPage/>} />
+        {/*<Route path = '/' element = {<InputPage/>} />
+        <Route path = 'joinCall' element = {<JoinCallPage/>} />*/}
+        <Route path ='/' element = {<AutoCall/>} />
 
 
       </Routes>
