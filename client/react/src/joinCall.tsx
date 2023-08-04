@@ -27,7 +27,7 @@ const JoinCallPage = () => {
         return;
         }, [token]);
 
-        const callAdapterArgs = useMemo(() => {
+    const callAdapterArgs = useMemo(() => {
             if (userId && credential && displayName && teamsMeetingLink) {
               return {
                 userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
@@ -37,7 +37,7 @@ const JoinCallPage = () => {
               }
             }
             return {};
-          }, [userId, credential, displayName, teamsMeetingLink]);
+        }, [userId, credential, displayName, teamsMeetingLink]);
 
           const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
