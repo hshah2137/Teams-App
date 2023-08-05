@@ -6,6 +6,8 @@
     "@azure/communication-common": "^2.2.0",
     "@azure/communication-react": "^1.4.1",
     "@fluentui/react": "^8.104.5",
+    "@fluentui/react-components": "^9.27.3",
+    "@fluentui/react-datepicker-compat": "^0.2.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/user-event": "^13.5.0",
@@ -14,9 +16,20 @@
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "@types/uuid": "^9.0.0",
+    "axios": "^1.4.0",
+    "carbon-components": "^10.58.8",
+    "carbon-components-react": "^8.34.1",
+    "carbon-icons": "^7.0.7",
     "cross-env": "^7.0.3",
+    "date-fns": "^2.30.0",
     "react": "~16.14.0",
-    "react-dom": "16.13.1",
+    "react-date-picker": "^10.5.0",
+    "react-datepicker": "^4.16.0",
+    "react-datetime-picker": "^5.5.1",
+    "react-day-picker": "^8.8.0",
+    "react-dom": "^16.13.1",
+    "react-modern-calendar-datepicker": "^3.1.6",
+    "react-responsive-datepicker": "^1.0.6",
     "react-router-dom": "^6.14.2",
     "react-scripts": "^5.0.1",
     "react-test-renderer": "^16.14.0",
@@ -51,5 +64,8 @@
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@types/react-datepicker": "^4.15.0"
   }
 }

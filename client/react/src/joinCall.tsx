@@ -2,9 +2,13 @@ import { ContosoCallContainer } from "./justCall";
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { useLocation } from "react-router-dom";
 import {  
-  CallComposite, 
+  CallComposite,
+  CallWithChatComposite, 
   fromFlatCommunicationIdentifier, 
-  useAzureCommunicationCallAdapter 
+  useAzureCommunicationCallAdapter,
+  CallAndChatLocator,
+  useAzureCommunicationCallWithChatAdapter,
+  CallWithChatCompositeOptions
 } from '@azure/communication-react';
 import React, { useState, useMemo, useEffect } from 'react';
 
@@ -14,11 +18,13 @@ const JoinCallPage = () => {
 
     const location = useLocation();
 
-    const displayName = 'Guest'
+    //const displayName = 'Guest'
     const [userId, setUserId] = useState<string>('');
     const [token, setToken] = useState<string>('');
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     const [message, setMessage] = useState<string>('');
+    const [displayName, setDisplay] = useState<string>('');
+    
 
     const credential = useMemo(() => {
         if (token) {
@@ -34,12 +40,14 @@ const JoinCallPage = () => {
                 displayName,
                 credential,
                 locator: { meetingLink: teamsMeetingLink },
+                endpoint: "https://communication-resource-ixn.unitedstates.communication.azure.com/"
               }
             }
             return {};
         }, [userId, credential, displayName, teamsMeetingLink]);
 
-          const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
+          const callAdapter = useAzureCommunicationCallWithChatAdapter(callAdapterArgs);
+          //const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
           useEffect(() => {
             const init = async () => {
@@ -49,6 +57,7 @@ const JoinCallPage = () => {
               const user = await res.json();
               setUserId(user.userId);
               setToken(user.token);
+              console.log(user.token)
     
             }
             init();
@@ -58,6 +67,7 @@ const JoinCallPage = () => {
     useEffect(()=>{
         const link_info = location.state;
         setTeamsMeetingLink(link_info.link)
+        setDisplay(link_info.subject)
     }
     )
 
@@ -65,14 +75,14 @@ const JoinCallPage = () => {
 
     if (callAdapter) {
         return (
-          <div>
+          
             
-            <div className="wrapper">
-              <CallComposite
+            <div className="wrapper" style ={{paddingTop:"5%"}}>
+              <CallWithChatComposite
                 adapter={callAdapter}
               />
             </div>
-          </div>
+          
         );
       }
       if (!credential) {
