@@ -1,6 +1,6 @@
 import { startDateTimeAsync, endDateTimeAsync } from './dateTimeFormat';
 import { ClientSecretCredential } from '@azure/identity';
-import { Client } from '@microsoft/microsoft-graph-client';
+import { Client, PageCollection } from '@microsoft/microsoft-graph-client';
 import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
 import 'isomorphic-fetch';
 
@@ -53,3 +53,16 @@ async function createNewMeetingAsync(userId, start, end, subject) {
 }
       
 export default createNewMeetingAsync;
+
+export async function getUsersAsync(email: string | string[]): Promise<PageCollection> {
+  ensureGraphForAppOnlyAuth();
+  // Ensure client isn't undefined
+  const users = appGraphClient.api('/users')
+    .select(['displayName', 'id', 'mail'])
+    .filter(`imAddresses/any(i:i eq '${email}')`)
+    //.top(25)
+    //.orderby('displayName')
+    .get();
+
+    return users;
+}
