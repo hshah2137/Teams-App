@@ -13,10 +13,10 @@ const App = () => {
       <Routes>
 
        
-        <Route path = '/' element = {<InputPage/>} />
+        {/*<Route path = '/' element = {<InputPage/>} />
         <Route path = 'joinCall' element = {<JoinCallPage/>} />
-        {/*<Route path ='/' element = {<AutoCall/>} />
-        <Route path = '/' element = {<CreateCall/>} />*/}
+        <Route path ='/' element = {<AutoCall/>} />*/}
+        <Route path = '/' element = {<CreateCall/>} />
 
 
       </Routes>

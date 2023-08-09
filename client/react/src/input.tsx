@@ -86,6 +86,11 @@ const InputPage = () => {
                 
                 </div>
                 <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: "2.5vh"}}>
+
+                <div style = {{marginTop: '2vh', display: 'flex',justifyContent:'center', alignItems: 'center' }}>
+                    <text style = {{color: 'red'}}>{errorMessage}</text>
+                </div>
+                
                 <button 
                 style = {buttonStyle} 
                 onClick={(event) => clickHandle(event)}
@@ -97,9 +102,7 @@ const InputPage = () => {
                 </div>
 
             </form>
-            <div style = {{marginTop: '2vh', display: 'flex',justifyContent:'center', alignItems: 'center' }}>
-            <text style = {{color: 'red'}}>{errorMessage}</text>
-            </div>
+            
       </div>   
       </FluentProvider>
     );

@@ -11,7 +11,8 @@ import { Field, makeStyles, Dropdown,
   useId, teamsLightTheme, FluentProvider, Input, Label} from "@fluentui/react-components";
 import type { DatePickerValidationResultData } from "@fluentui/react-datepicker-compat";
 import type { DropdownProps } from "@fluentui/react-components";
-import {ArrowDown32Regular} from '@fluentui/react-icons';
+import {ArrowDown32Regular, PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
+
 import axios from 'axios';
 import {
   Dialog,
@@ -167,7 +168,7 @@ const CreateCall = () => {
   const clickHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
     event.preventDefault()
     
-    if (date && startTime && endDate && endTime != undefined && subject != "" && subject!= null){
+    if (date && startTime && endDate && endTime !== undefined && subject !== "" && subject!= null && atendee_email !== "" && atendee_email != null){
       const finale_start = convertDateTime(date, startTime);
       const finale_end = convertDateTime(endDate, endTime);
 
@@ -182,12 +183,15 @@ const CreateCall = () => {
         console.log(subject)
         console.log(finale_start)
         console.log(finale_end)
-
-        createMeeting(subject, finale_start, finale_end)
+        getUser(atendee_email, subject, finale_start, finale_end)
+        //createMeeting(subject, finale_start, finale_end)
       }
     }
 
     else {
+      setTitle("Please fill in all the fields")
+      setResponseBody("All the fields must be filled before a meeting can be booked."); // Save the response body to state
+      setIsDialogOpen(true);
       console.log("Please fill all the fields")
     }
      
@@ -195,10 +199,11 @@ const CreateCall = () => {
     
   const [subject, setSubject] = React.useState<String | null >();
 
-  const createMeeting = async (subject: String, start: String, end: String)=>{
+  const createMeeting = async (userId: String, subject: String, start: String, end: String)=>{
     try{
         const response = await axios.post('http://localhost:7071/api/TeamsMeetingFunction',
-        {
+        { 
+          userId: userId,
           subject: subject,
           startTime: start,
           endTime: end,
@@ -208,11 +213,15 @@ const CreateCall = () => {
           },
         })
         console.log(response.data)
+        setTitle("Teams Meeting Link")
         setResponseBody(response.data); // Save the response body to state
         setIsDialogOpen(true); 
         
     }
     catch(error) {
+      setTitle("Something went Wrong")
+      setResponseBody("We are sorry, there was an error booking your meeting. Please try again later."); // Save the response body to state
+      setIsDialogOpen(true); 
       console.log(error)
     }
   }
@@ -223,11 +232,53 @@ const CreateCall = () => {
   },[subject])
 
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [responseBody, setResponseBody] = React.useState("");
+  const [responseBody, setResponseBody] = React.useState<String | null >();
+  const [modalTitle, setTitle] = React.useState<String | null >();
 
   const modalHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setIsDialogOpen(false);
   }
+
+  const [atendee_email, setEmail] = React.useState("")
+  const [atendee_ID, setID] = React.useState("")
+
+  const getUser = async (email: String, subject: String, start: String, end: String)=>{
+    try{
+        const response = await axios.post('http://localhost:7071/api/RetrieveUsersFunction',
+        {
+          email: email,
+          
+        },  {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        })
+        console.log(response.data)
+        //console.log(response.data[0].id)
+        if (response.data.users[0].id !== undefined){
+          console.log(response.data.users[0].id)
+        setID(response.data.users[0].id)
+        const id = response.data.users[0].id
+        //setEmail(response.data); // Save the response body to state
+        //setIsDialogOpen(true); 
+        createMeeting( id ,subject, start, end)
+        }
+        else{
+          setTitle("Something went Wrong")
+          setResponseBody("We are sorry, there was no user with the email: " + email); // Save the response body to state
+          setIsDialogOpen(true);
+          console.log("no users found")
+        }
+        
+    }
+    catch(error) {
+      setTitle("Something went Wrong")
+      setResponseBody("We are sorry, there was an error booking your meeting. Please try again later."); // Save the response body to state
+      setIsDialogOpen(true);
+      console.log(error)
+    }
+  }
+
 
   return (
     
@@ -236,10 +287,23 @@ const CreateCall = () => {
       <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh'}}>
         <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center'}}>
 
-        <p style={{ display: "inline-block", marginRight: "10px" }}>Meeting Subject: </p>
+        {/*<p style={{ display: "inline-block", marginRight: "10px" }}>Meeting Subject: </p>
+          */}
 
-          <Input style={{width:'40vw'}} placeholder="Enter the meeting subject" id={inputId} 
+        <CalendarLtr24Regular style={{ display: "inline-block", marginRight: "10px" }}/>
+
+          <Input style={{width:'70vw'}} placeholder="Enter the meeting subject" id={inputId} 
           onChange={(ev, data) =>setSubject(data.value)}/>
+
+        </div>
+
+        <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
+
+          <PersonAdd24Regular style={{ display: "inline-block", marginRight: "10px" }} />
+        
+
+          <Input style={{width:'70vw'}} placeholder="Add required atendee's email" id={inputId} 
+          onChange={(ev, data) =>setEmail(data.value)}/>
 
         </div>
       
@@ -362,7 +426,7 @@ const CreateCall = () => {
     
                   <DialogSurface>
                     <DialogBody>
-                      <DialogTitle>Teams Meeting Link</DialogTitle>
+                      <DialogTitle>{modalTitle}</DialogTitle>
                       <DialogContent>
                         {responseBody}
                       </DialogContent>
