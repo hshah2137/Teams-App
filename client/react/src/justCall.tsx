@@ -64,7 +64,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
 
   if (adapter) {
     return (
-      <div style={{ height: '80vh', width: '80vw' }}>
+      <div style={{ height: '70vh', width: '70vw' }}>
         <CallComposite
           adapter={adapter}
           formFactor={props.formFactor}

@@ -4,25 +4,27 @@ import AutoCall from './AutoCall';
 import InputPage from './input';
 import JoinCallPage from './joinCall';
 import CreateCall from './createCall';
+import CheckUser from './validateUser';
+import ColorSchemesExample from './navbar';
 
 const App = () => { 
  
   return(
+    <div className = "wrapper">
     <Router>
-
+      <ColorSchemesExample />
       <Routes>
-
-       
-        {/*<Route path = '/' element = {<InputPage/>} />
-        <Route path = 'joinCall' element = {<JoinCallPage/>} />
-        <Route path ='/' element = {<AutoCall/>} />*/}
-        <Route path = '/' element = {<CreateCall/>} />
-
-
+        
+        {/*<Route path ='/' element = {<AutoCall/>} />
+        <Route path = '/createCall' element = {<CreateCall/>} />*/}
+        <Route path = '/validateUser' element = {<CheckUser/>} />
+        <Route path = '/createCall' element = {<CreateCall/>} />
+        <Route path = '/input' element = {<InputPage/>} />
+        <Route path = '/joinCall' element = {<JoinCallPage/>} />
       </Routes>
 
     </Router>
-    
+    </div>
  );
 }
 export default App;

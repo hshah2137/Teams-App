@@ -51,10 +51,13 @@ const JoinCallPage = () => {
 
           useEffect(() => {
             const init = async () => {
+              
               setMessage('Getting ACS user');
+              
               //Call Azure Function to get the ACS user identity and token
               const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
               const user = await res.json();
+              SetrequestStatus(true)
               setUserId(user.userId);
               setToken(user.token);
               console.log(user.token)
@@ -71,21 +74,26 @@ const JoinCallPage = () => {
     }
     )
 
+    const [requestMade, SetrequestStatus] = useState(false)
+
     //const userID = fromFlatCommunicationIdentifier('8:acs:66a9f55d-36c9-4cb7-b90e-4148b1363ade_0000001a-3b27-85e0-3ef0-8b3a0d0034e0')
 
     if (callAdapter) {
         return (
           
             
-            <div className="wrapper" style ={{paddingTop:"5%"}}>
+            <div className="wrapper" style ={{backgroundColor: '#F5F5F5', height: "90vh", padding: "5%"
+          }}>
               <CallWithChatComposite
+              
                 adapter={callAdapter}
+                
               />
             </div>
           
         );
       }
-      if (!credential) {
+      if (!credential && requestMade === true) {
         return <>Failed to construct credential. Provided token is malformed.</>;
       }
       if (message) {

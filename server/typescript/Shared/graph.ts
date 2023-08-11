@@ -48,11 +48,43 @@ async function createNewMeetingAsync(userId, start, end, subject) {
       isOnlineMeeting: true
     };
     
-    const newEvent = await appGraphClient.api(newMeeting).post(event);    
+    const newEvent = await appGraphClient.api(newMeeting).post(event);
     return newEvent;     
-}
-      
+  }
+     
 export default createNewMeetingAsync;
+
+export async function sendEmail() {
+  ensureGraphForAppOnlyAuth();
+  const sendMail = {
+    message: {
+      subject: 'Meet for lunch?',
+      body: {
+        contentType: 'Text',
+        content: 'The new cafeteria is open.'
+      },
+      toRecipients: [
+        {
+          emailAddress: {
+            address: 'hamzah@hshah2136.onmicrosoft.com'
+          }
+        }
+      ],
+      /*ccRecipients: [
+        {
+          emailAddress: {
+            address: 'danas@contoso.onmicrosoft.com'
+          }
+        }
+      ]*/
+    },
+    //saveToSentItems: 'false'
+  };
+  
+  const response = await appGraphClient.api('/users/29bab168-0262-4142-b8f9-8543bc0f4249/sendMail')
+    .post(sendMail);
+    console.log(response)
+}
 
 export async function getUsersAsync(email: string | string[]): Promise<PageCollection> {
   ensureGraphForAppOnlyAuth();

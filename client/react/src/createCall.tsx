@@ -12,7 +12,7 @@ import { Field, makeStyles, Dropdown,
 import type { DatePickerValidationResultData } from "@fluentui/react-datepicker-compat";
 import type { DropdownProps } from "@fluentui/react-components";
 import {ArrowDown32Regular, PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
-
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import {
   Dialog,
@@ -177,13 +177,16 @@ const CreateCall = () => {
 
       if (date_start >= date_end){
         console.log("start and end time cannot be the same")
+        setTitle("Something went wrong")
+      setResponseBody("The start date cannot be after the end date."); // Save the response body to state
+      setIsDialogOpen(true);
       }
       else{
         console.log("good")
         console.log(subject)
         console.log(finale_start)
         console.log(finale_end)
-        getUser(atendee_email, subject, finale_start, finale_end)
+        getUser(user_email, subject, finale_start, finale_end)
         //createMeeting(subject, finale_start, finale_end)
       }
     }
@@ -198,8 +201,9 @@ const CreateCall = () => {
   }
     
   const [subject, setSubject] = React.useState<String | null >();
+  const [meetinglink, setLink] = React.useState(""); 
 
-  const createMeeting = async (userId: String, subject: String, start: String, end: String)=>{
+  const createMeeting = async (userId: String, subject: String, start: String, end: String, name: string, email: string, atendee: String)=>{
     try{
         const response = await axios.post('http://localhost:7071/api/TeamsMeetingFunction',
         { 
@@ -207,14 +211,21 @@ const CreateCall = () => {
           subject: subject,
           startTime: start,
           endTime: end,
+          name: name,
+          email: email,
+          atendee: atendee
         },  {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         })
         console.log(response.data)
-        setTitle("Teams Meeting Link")
-        setResponseBody(response.data); // Save the response body to state
+        setTitle("Success! Your meeting has been successfully created")
+        setLink(response.data)
+        const message = /*"Your meeting has been successfully created.\n" + "An email has also been sent to " + 
+                          user_email +  " and " +  atendee_email + " with the following link: \n" +*/ 
+                          response.data
+        setResponseBody(message); // Save the response body to state
         setIsDialogOpen(true); 
         
     }
@@ -226,10 +237,17 @@ const CreateCall = () => {
     }
   }
 
+  const location = useLocation();
+  const [user_email, setUserEmail] = React.useState("");
+  const [user_name, setUserName] = React.useState("");
+
   React.useEffect(()=>{
     //console.log(date)
-    console.log(subject)
-  },[subject])
+    //console.log(subject)
+    const user_info = location.state;
+    setUserEmail(user_info.email)
+    setUserName(user_info.name)
+  },[])
 
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [responseBody, setResponseBody] = React.useState<String | null >();
@@ -261,7 +279,7 @@ const CreateCall = () => {
         const id = response.data.users[0].id
         //setEmail(response.data); // Save the response body to state
         //setIsDialogOpen(true); 
-        createMeeting( id ,subject, start, end)
+        createMeeting( id ,subject, start, end, user_name , user_email, atendee_email)
         }
         else{
           setTitle("Something went Wrong")
@@ -282,10 +300,10 @@ const CreateCall = () => {
 
   return (
     
-    <div style ={{paddingLeft: '5%', paddingRight: '5%'}}>
-      <h1 style = {{alignItems: 'center'}}>Create a meeting</h1>
-      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh'}}>
-        <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center'}}>
+    <div style ={{paddingLeft: '5%', paddingRight: '5%', backgroundColor : '#F5F5F5'}}>
+      {/*<h1 style = {{alignItems: 'center'}}>Create a meeting</h1>*/}
+      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', backgroundColor : '#F5F5F5'}}>
+        <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
 
         {/*<p style={{ display: "inline-block", marginRight: "10px" }}>Meeting Subject: </p>
           */}
@@ -359,13 +377,7 @@ const CreateCall = () => {
 
 </div>
 
-</FluentProvider>
-
-{/*<ArrowDown32Regular/>*/}
-
-<FluentProvider theme={teamsLightTheme} style = {{marginTop: '4vh'}}>
-
-    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center'}}>
+    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
 
     <p style={{ display: "inline-block", marginRight: "10px" }}>End Date:</p>
 
@@ -429,6 +441,7 @@ const CreateCall = () => {
                       <DialogTitle>{modalTitle}</DialogTitle>
                       <DialogContent>
                         {responseBody}
+                       
                       </DialogContent>
                       <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
