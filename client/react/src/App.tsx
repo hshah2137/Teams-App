@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route }from 'react-router-dom';
-import AutoCall from './AutoCall';
 import InputPage from './input';
 import JoinCallPage from './joinCall';
 import CreateCall from './createCall';

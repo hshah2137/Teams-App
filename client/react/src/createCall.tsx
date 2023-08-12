@@ -350,8 +350,6 @@ const CreateCall = () => {
       />
 
       </div>
-      
-      <text style={{color:'red'}}>{error}</text>
 
       <div className={styles.root}>
 
@@ -401,8 +399,7 @@ const CreateCall = () => {
       />
 
       </div>
-      
-      <text style={{color:'red'}}>{endDateError}</text>
+
 
       <div className={
         styles.root}>
