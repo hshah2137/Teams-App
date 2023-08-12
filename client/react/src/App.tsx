@@ -6,6 +6,7 @@ import JoinCallPage from './joinCall';
 import CreateCall from './createCall';
 import CheckUser from './validateUser';
 import ColorSchemesExample from './navbar';
+import HomePage from './home';
 
 const App = () => { 
  
@@ -17,6 +18,7 @@ const App = () => {
         
         {/*<Route path ='/' element = {<AutoCall/>} />
         <Route path = '/createCall' element = {<CreateCall/>} />*/}
+        <Route path = '/' element = {<HomePage />} />
         <Route path = '/validateUser' element = {<CheckUser/>} />
         <Route path = '/createCall' element = {<CreateCall/>} />
         <Route path = '/input' element = {<InputPage/>} />
