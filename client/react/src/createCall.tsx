@@ -1,17 +1,11 @@
 import * as React from "react";
-import {
-  addMonths,
-  addYears,
-  DatePicker,
-  defaultDatePickerErrorStrings,
-} from "@fluentui/react-datepicker-compat";
-import { Field, makeStyles, Dropdown,
+import {DatePicker} from "@fluentui/react-datepicker-compat";
+import { makeStyles, Dropdown,
   Option,
   shorthands,
-  useId, teamsLightTheme, FluentProvider, Input, Label} from "@fluentui/react-components";
+  useId, teamsLightTheme, FluentProvider, Input, } from "@fluentui/react-components";
 import type { DatePickerValidationResultData } from "@fluentui/react-datepicker-compat";
-import type { DropdownProps } from "@fluentui/react-components";
-import {ArrowDown32Regular, PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
+import {PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {

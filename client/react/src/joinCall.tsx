@@ -1,16 +1,11 @@
-import { ContosoCallContainer } from "./justCall";
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { useLocation } from "react-router-dom";
 import {  
-  CallComposite,
   CallWithChatComposite, 
   fromFlatCommunicationIdentifier, 
-  useAzureCommunicationCallAdapter,
-  CallAndChatLocator,
   useAzureCommunicationCallWithChatAdapter,
-  CallWithChatCompositeOptions
 } from '@azure/communication-react';
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 const JoinCallPage = () => {
 

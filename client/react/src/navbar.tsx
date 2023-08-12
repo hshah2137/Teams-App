@@ -1,19 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav, NavLink} from 'react-bootstrap';
-import { SetStateAction, useState, useEffect } from 'react';
-import { FluentProvider } from '@fluentui/react-components';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import CCDLogo from './assets/CCDlogo.png'
 
 const ColorSchemesExample = () => {
 
-    //const [selected, setSelected] = useState('join'); // Default selected link
-
+    
     const [selected, setSelected] = useState('home')
     
     const location = useLocation();
   
     useEffect(()=>{
-        //console.log(location)
+        
         if (location.pathname === '') {
             setSelected('home') 
         }
@@ -55,7 +54,7 @@ const ColorSchemesExample = () => {
             
                 <Navbar bg="dark" data-bs-theme="dark">
                     <Container>
-                        {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
+                        <Navbar.Brand href="/"><img src={CCDLogo} width="45" height ="45" /></Navbar.Brand>
                         <Nav className="me-auto">
                             <NavLink
                                 href="/"

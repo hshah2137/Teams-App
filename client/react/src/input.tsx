@@ -1,6 +1,6 @@
-import {useEffect, useRef, useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Field, Textarea, FluentProvider, teamsLightTheme, Input, useId} from "@fluentui/react-components";
+import {Textarea, FluentProvider, teamsLightTheme, Input, useId} from "@fluentui/react-components";
 import {
     Dialog,
     DialogTrigger,
@@ -128,7 +128,7 @@ const InputPage = () => {
                 onClick={(event) => clickHandle(event)}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}>
-                    Confirm
+                    Join
                 </button>
                 
                 </div>
