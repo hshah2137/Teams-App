@@ -55,12 +55,22 @@ const JoinCallPage = () => {
               setMessage('Getting ACS user');
               
               //Call Azure Function to get the ACS user identity and token
-              const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+              try {
+                const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
               const user = await res.json();
+              console.log(res)
               SetrequestStatus(true)
               setUserId(user.userId);
               setToken(user.token);
-              console.log(user.token)
+              console.log(user.token);
+
+              setMessage("Checking Teams link")
+                
+              }
+              catch (error) {
+                setMessage("Sorry, there are connection problems at the moment. Please try again later")
+                console.log(error)
+              }
     
             }
             init();
@@ -70,7 +80,7 @@ const JoinCallPage = () => {
     useEffect(()=>{
         const link_info = location.state;
         setTeamsMeetingLink(link_info.link)
-        setDisplay(link_info.subject)
+        setDisplay(link_info.displayName)
     }
     )
 
@@ -97,7 +107,7 @@ const JoinCallPage = () => {
         return <>Failed to construct credential. Provided token is malformed.</>;
       }
       if (message) {
-        return <div>{message}</div>;
+        return <div style = {{marginTop: '3vh'}}>{message}</div>;
       }
       return <div>Initializing...</div>;
    

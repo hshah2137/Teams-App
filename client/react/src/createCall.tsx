@@ -12,7 +12,7 @@ import { Field, makeStyles, Dropdown,
 import type { DatePickerValidationResultData } from "@fluentui/react-datepicker-compat";
 import type { DropdownProps } from "@fluentui/react-components";
 import {ArrowDown32Regular, PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {
   Dialog,
@@ -167,6 +167,9 @@ const CreateCall = () => {
 
   const clickHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
     event.preventDefault()
+    setTitle("")
+    setResponseBody(""); // Save the response body to state
+    setLink("")
     
     if (date && startTime && endDate && endTime !== undefined && subject !== "" && subject!= null && atendee_email !== "" && atendee_email != null){
       const finale_start = convertDateTime(date, startTime);
@@ -222,16 +225,15 @@ const CreateCall = () => {
         console.log(response.data)
         setTitle("Success! Your meeting has been successfully created")
         setLink(response.data)
-        const message = /*"Your meeting has been successfully created.\n" + "An email has also been sent to " + 
-                          user_email +  " and " +  atendee_email + " with the following link: \n" +*/ 
-                          response.data
+        const message = "A confirmation email has also been sent to " + 
+                          user_email +  " and " +  atendee_email + " with the following link: "
         setResponseBody(message); // Save the response body to state
-        setIsDialogOpen(true); 
+        setIsDialogOpen(true);
         
     }
     catch(error) {
       setTitle("Something went Wrong")
-      setResponseBody("We are sorry, there was an error booking your meeting. Please try again later."); // Save the response body to state
+      setResponseBody("We are sorry, there was an error booking your meeting. Please try again later.");
       setIsDialogOpen(true); 
       console.log(error)
     }
@@ -253,8 +255,13 @@ const CreateCall = () => {
   const [responseBody, setResponseBody] = React.useState<String | null >();
   const [modalTitle, setTitle] = React.useState<String | null >();
 
+  const navigate = useNavigate();
+
   const modalHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
     setIsDialogOpen(false);
+    if (modalTitle === 'Success! Your meeting has been successfully created'){
+      navigate('/')
+    }
   }
 
   const [atendee_email, setEmail] = React.useState("")
@@ -301,8 +308,9 @@ const CreateCall = () => {
   return (
     
     <div style ={{paddingLeft: '5%', paddingRight: '5%', backgroundColor : '#F5F5F5'}}>
-      {/*<h1 style = {{alignItems: 'center'}}>Create a meeting</h1>*/}
-      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', backgroundColor : '#F5F5F5'}}>
+      
+      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', marginTop: '3vh', backgroundColor : '#F5F5F5'}}>
+      <h4 style = {{alignItems: 'center'}}>Enter the meeting details</h4>
         <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
 
         {/*<p style={{ display: "inline-block", marginRight: "10px" }}>Meeting Subject: </p>
@@ -359,8 +367,7 @@ const CreateCall = () => {
         aria-labelledby={dropdownId}
         placeholder="Select a time"
         style = {{width: '20vw', maxHeight: '10vh'}}
-        onOptionSelect={(ev, option) => handleStartTimeChange(option?.optionValue || "")} // Handle the selection change
-        
+        onOptionSelect={(ev, option) => handleStartTimeChange(option?.optionValue || "")} // Handle the selection change  
       >
 
         {options.map((option) => (
@@ -439,10 +446,16 @@ const CreateCall = () => {
                   <DialogSurface>
                     <DialogBody>
                       <DialogTitle>{modalTitle}</DialogTitle>
+
                       <DialogContent>
+                      <div style={{ display: 'block', marginBottom: '10px' }}>
                         {responseBody}
-                       
+                      </div>
+                      <div style={{ display: 'block' }}>
+                      <a href={meetinglink}>{meetinglink}</a>
+                      </div>
                       </DialogContent>
+
                       <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
                           <Button appearance="secondary" onClick={(event) => modalHandle(event)}>Close</Button>

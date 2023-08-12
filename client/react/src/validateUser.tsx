@@ -98,7 +98,7 @@ const CheckUser = () => {
 
         else{
             setTitle("Something went Wrong")
-          setResponseBody("We are sorry, there are no users with these details. Please double check your spelling"); // Save the response body to state
+          setResponseBody("We are sorry, there are no users with the name '" + name + "' and the email '" + email + "'. Please double check your spelling"); // Save the response body to state
           setIsDialogOpen(true);
           console.log("no users found")
         }
@@ -114,13 +114,13 @@ const CheckUser = () => {
   return(
     
   <div>
-    {/*<h1 style = {{alignItems: 'center'}}>Create a meeting: Enter your Details</h1>*/}
-      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', backgroundColor: '#F5F5F5' }}>
-        
+    
+      <FluentProvider theme={teamsLightTheme} style ={{marginTop: '3vh', backgroundColor: '#F5F5F5', textAlign: 'left', marginLeft: '5vh' }}>
+        <h4 style = {{alignItems: 'center'}}>Confirm your details to create a meeting</h4>
       <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
       <Person24Regular style={{ display: "inline-block", marginRight: "10px" }} />
 
-        <Input style={{width:'70vw'}} placeholder="Please enter your name" id={inputId} 
+        <Input style={{width:'70vw'}} placeholder="Please enter your full name" id={inputId} 
         onChange={(ev, data) =>setName(data.value)}/>
 
     </div>

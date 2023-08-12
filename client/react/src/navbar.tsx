@@ -1,20 +1,42 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav, NavLink} from 'react-bootstrap';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useState, useEffect } from 'react';
 import { FluentProvider } from '@fluentui/react-components';
+import { useLocation } from 'react-router-dom';
 
 const ColorSchemesExample = () => {
 
     //const [selected, setSelected] = useState('join'); // Default selected link
 
-    const [selected, setSelected] = useState(() => {
-      const path = window.location.pathname;
-      if (path === '/input') return 'join';
-      if (path === '/joinCall') return 'join';
-      if (path === '/validateUser') return 'create';
-      if (path === '/createCall') return 'create';
-      return 'home'; // Add a default value or handle other cases
-  });
+    const [selected, setSelected] = useState('home')
+    
+    const location = useLocation();
+  
+    useEffect(()=>{
+        //console.log(location)
+        if (location.pathname === '') {
+            setSelected('home') 
+        }
+        if (location.pathname === '/') {
+            setSelected('home')
+        }
+        if (location.pathname === '/input') {
+            setSelected('join')
+        }
+        if (location.pathname === '/joinCall') {
+            setSelected('join')
+        }
+        if (location.pathname === '/validateUser') {
+            setSelected('create')
+        }
+        if (location.pathname === '/createCall') 
+        {
+            setSelected('create')
+        }
+        
+    }, [location])
+
+
 
     const handleNavLinkClick = (page: string) => {
         setSelected(page);
@@ -35,14 +57,14 @@ const ColorSchemesExample = () => {
                     <Container>
                         {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
                         <Nav className="me-auto">
-                            {/*<NavLink
-                                href="#home"
+                            <NavLink
+                                href="/"
                                 className={`nav-link ${selected === 'home' ? 'selected' : ''}`}
                                 style={{ ...text_style, ...(selected === 'home' ? selectedLinkStyle : {}) }}
                                 onClick={() => handleNavLinkClick('home')}
                             >
                                 Home
-    </NavLink>*/}
+                            </NavLink>
                             <NavLink
                                 href="/input"
                                 className={`nav-link ${selected === 'join' ? 'selected' : ''}`}
