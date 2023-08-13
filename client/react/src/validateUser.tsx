@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useId, teamsLightTheme, FluentProvider, Input, } from "@fluentui/react-components";
+import { useId, teamsLightTheme, FluentProvider, Input, Divider } from "@fluentui/react-components";
 import { Person24Regular, Mail24Regular} from '@fluentui/react-icons';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -102,8 +102,9 @@ const CheckUser = () => {
     
   <div>
     
-      <FluentProvider theme={teamsLightTheme} style ={{marginTop: '3vh', backgroundColor: '#F5F5F5', textAlign: 'left', marginLeft: '5vh' }}>
-        <h4 style = {{alignItems: 'center'}}>Confirm your details to create a meeting</h4>
+      <FluentProvider theme={teamsLightTheme} style ={{marginTop: '3vh', backgroundColor: '#F5F5F5', textAlign: 'left'}}>
+        <h4 style = {{alignItems: 'center', marginLeft: '5vh' }}>Confirm your details to create a meeting</h4>
+        <Divider style = {{paddingTop: '2vh', paddingRight: '2vw', paddingLeft: '2vw'}} />
       <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
       <Person24Regular style={{ display: "inline-block", marginRight: "10px" }} />
 

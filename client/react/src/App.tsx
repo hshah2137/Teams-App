@@ -14,9 +14,6 @@ const App = () => {
     <Router>
       <ColorSchemesExample />
       <Routes>
-        
-        {/*<Route path ='/' element = {<AutoCall/>} />
-        <Route path = '/createCall' element = {<CreateCall/>} />*/}
         <Route path = '/' element = {<HomePage />} />
         <Route path = '/validateUser' element = {<CheckUser/>} />
         <Route path = '/createCall' element = {<CreateCall/>} />

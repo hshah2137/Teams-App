@@ -1,6 +1,6 @@
 import {useState, ChangeEvent} from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Textarea, FluentProvider, teamsLightTheme, Input, useId} from "@fluentui/react-components";
+import {Textarea, FluentProvider, teamsLightTheme, Input, useId, Divider} from "@fluentui/react-components";
 import {
     Dialog,
     DialogTrigger,
@@ -102,7 +102,8 @@ const InputPage = () => {
         <FluentProvider theme = {teamsLightTheme} style = {{backgroundColor: '#F5F5F5'}}>
         <div style = {{marginTop: "3vh"}}>
             <h4 style = {{display: 'flex',  marginLeft: '5vw', textAlign: 'left'}}>Enter your name and a teams link to join a meeting</h4>
-            <form>
+            <Divider style = {{paddingTop: '2vh', paddingRight: '2vw', paddingLeft: '2vw' }} />
+            
             <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: "4vh"}}>
 
                     {/*<p style={{ display: "inline-block", marginRight: "10px", marginTop: '1.5vh'}}>Guest Name: </p>*/}
@@ -133,7 +134,6 @@ const InputPage = () => {
                 
                 </div>
 
-            </form>
 
             <Dialog open={isDialogOpen}>
     

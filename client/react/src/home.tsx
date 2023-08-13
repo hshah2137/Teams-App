@@ -52,7 +52,7 @@ const HomePage = () => {
         <div style = {{backgroundColor: '#F5F5F5', marginTop: '3vh', textAlign: 'left'}}>
         
         <h4 style = {{marginLeft: '5vh'}}>Command Centres Design: Microsoft Teams Functionality </h4>
-        <Divider style = {{paddingTop: '2vh', paddingBottom: '2vh', }} />
+        <Divider style = {{paddingTop: '2vh', paddingBottom: '2vh', paddingRight: '2vw', paddingLeft: '2vw' }} />
         <div style = {{display: 'flex',justifyContent:'flex-start', 
             }}>
 
@@ -75,7 +75,7 @@ const HomePage = () => {
                 </ol>
         </div>
 
-        <Divider style = {{paddingTop: '2vh', paddingBottom: '2vh'}}/>
+        <Divider style = {{paddingTop: '2vh', paddingBottom: '2vh', paddingRight: '2vw', paddingLeft: '2vw'}}/>
 
         <div style = {{display: 'flex',justifyContent:'flex-start', 
             }}>
@@ -94,7 +94,7 @@ const HomePage = () => {
                     
                 </ol>
         </div>
-        
+        <Divider style = {{paddingTop: '2vh', paddingBottom: '2vh', paddingRight: '2vw', paddingLeft: '2vw'}}/>
         </div>
         </FluentProvider>
     )

@@ -76,7 +76,7 @@ const JoinCallPage = () => {
         const link_info = location.state;
         setTeamsMeetingLink(link_info.link)
         setDisplay(link_info.displayName)
-    }
+    },[location.state]
     )
 
     const [requestMade, SetrequestStatus] = useState(false)

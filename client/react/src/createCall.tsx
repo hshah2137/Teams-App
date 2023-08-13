@@ -1,9 +1,11 @@
 import * as React from "react";
-import {DatePicker} from "@fluentui/react-datepicker-compat";
+import {DatePicker, defaultDatePickerErrorStrings,} from "@fluentui/react-datepicker-compat";
 import { makeStyles, Dropdown,
   Option,
   shorthands,
-  useId, teamsLightTheme, FluentProvider, Input, } from "@fluentui/react-components";
+  useId, teamsLightTheme, 
+  FluentProvider, Input, Divider, Field, 
+  webLightTheme, } from "@fluentui/react-components";
 import type { DatePickerValidationResultData } from "@fluentui/react-datepicker-compat";
 import {PersonAdd24Regular, CalendarLtr24Regular} from '@fluentui/react-icons';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +20,7 @@ import {
   DialogContent,
   Button,
 } from "@fluentui/react-components";
+import type { DatePickerProps } from "@fluentui/react-datepicker-compat";
 
 
 const today = new Date();
@@ -132,10 +135,6 @@ const CreateCall = () => {
       setEnd(option);
       console.log(option)
     };
-
-    const [formatted, setFormattedStart] = React.useState<String | undefined>();
-    const [formattedEnd, setFormattedEnd] = React.useState<String | undefined>();
-
 
     const convertDateTime = (date: Date, time: String) =>{
       console.log(date)
@@ -301,10 +300,11 @@ const CreateCall = () => {
 
   return (
     
-    <div style ={{paddingLeft: '5%', paddingRight: '5%', backgroundColor : '#F5F5F5'}}>
+    <div style ={{ backgroundColor : '#F5F5F5'}}>
       
-      <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', marginTop: '3vh', backgroundColor : '#F5F5F5'}}>
-      <h4 style = {{alignItems: 'center'}}>Enter the meeting details</h4>
+    <FluentProvider theme={teamsLightTheme} style ={{marginBottom: '4vh', marginTop: '3vh', backgroundColor : '#F5F5F5'}}>
+      <h4 style = {{alignItems: 'center', marginLeft: '5vw'}}>Enter the meeting details</h4>
+      <Divider style = {{paddingTop: '2vh', paddingRight: '2vw', paddingLeft: '2vw' }} />
         <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
 
         {/*<p style={{ display: "inline-block", marginRight: "10px" }}>Meeting Subject: </p>
@@ -327,37 +327,31 @@ const CreateCall = () => {
 
         </div>
       
-    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
+    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh',}}>
 
-    <p style={{ display: "inline-block", marginRight: "10px" }}>Start Date:</p>
+        <p style={{ marginRight: "10px", marginTop: '12px' }}>Start Date:</p>
+        <FluentProvider theme={teamsLightTheme}>
+        <Field validationMessage={error && defaultDatePickerErrorStrings[error]} >
+        <DatePicker
+          minDate={today}
+          value={date}
+          formatDate={onFormatDate}
+          placeholder="Select a date..."
+          allowTextInput
+          onValidationResult={(data) => setError(data.error)}
+          style={{ width: '25vw'}}
+          underlined={true}
+          isMonthPickerVisible={false}
+          onSelectDate={handleDateChange}
+        />
+        </Field>
+        </FluentProvider>
 
-      <div style = {{width: "25vw" }}>
-      
-      <DatePicker
-        minDate={today}
-        //maxDate={maxDate}
-        value={date}
-        formatDate={onFormatDate}
-        placeholder="Select a date..."
-        allowTextInput
-        onValidationResult={(data) => setError(data.error)}
-        //className={styles.control}
-        style = {{width: '25vw'}}
-        underlined = {true}
-        isMonthPickerVisible = {false}
-        onSelectDate={handleDateChange}
-        
-      />
-
-      </div>
-
-      <div className={styles.root}>
-
-      <p style={{ display: "inline-block", marginRight: "10px", marginLeft: "5vw"}}>Start Time:</p>
+      <p style={{ display: "inline-block", marginTop: '12px', marginRight: "10px", marginLeft: "5vw",}}>Start Time:</p>
       
       <Dropdown
         aria-labelledby={dropdownId}
-        placeholder="Select a time"
+        placeholder="Select a start time"
         style = {{width: '20vw', maxHeight: '10vh'}}
         onOptionSelect={(ev, option) => handleStartTimeChange(option?.optionValue || "")} // Handle the selection change  
       >
@@ -372,17 +366,16 @@ const CreateCall = () => {
 
       </Dropdown>
 
-    </div>
 
 </div>
 
-    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh'}}>
+    <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '3.5vh'}}>
 
-    <p style={{ display: "inline-block", marginRight: "10px" }}>End Date:</p>
-
-      <div style = {{width: "25vw" }}>
+    <p style={{ display: "inline-block", marginRight: "15px", marginTop: '12px' }}>End Date:</p>
+    <FluentProvider theme={webLightTheme}>
+    <Field validationMessage={endDateError && defaultDatePickerErrorStrings[endDateError]} >
       
-      <DatePicker
+        <DatePicker
         minDate={today}
         //maxDate={maxDate}
         value={endDate}
@@ -391,23 +384,21 @@ const CreateCall = () => {
         allowTextInput
         onValidationResult={(data) => setEndError(data.error)}
         //className={styles.control}
-        style = {{width: '25vw'}}
+        style = {{width: '25vw'
+      }}
         underlined = {true}
         isMonthPickerVisible = {false}
         onSelectDate={handleEndDateChange}
 
       />
-
-      </div>
-
-
-      <div className={
-        styles.root}>
-      <p style={{ display: "inline-block", marginRight: "10px", marginLeft: "6vw"}}>End Time:</p>
+    </Field>
+    </FluentProvider>
+    
+      <p style={{ display: "inline-block", marginTop: '12px', marginRight: "15px", marginLeft: "5vw"}}>End Time:</p>
       
       <Dropdown
         aria-labelledby={dropdownId}
-        placeholder="Select a time"
+        placeholder="Select an end time"
         style = {{width: '20vw', maxHeight: '10vh'}}
         onOptionSelect={(ev, option) => handleEndTimeChange(option?.optionValue || "")}
       >
@@ -417,10 +408,10 @@ const CreateCall = () => {
           </Option>
         ))}
       </Dropdown>
-    </div>
+
 </div>
 
-<div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh', marginBottom: '4vh'}}>
+<div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '3.5vh', marginBottom: '4vh'}}>
 
           <button 
                     style = {buttonStyle} 
