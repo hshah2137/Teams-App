@@ -219,7 +219,7 @@ const CreateCall = () => {
         setTitle("Success! Your meeting has been successfully created")
         setLink(response.data)
         const message = "A confirmation email has also been sent to " + 
-                          user_email +  " and " +  atendee_email + " with the following link: "
+                          user_email +  " and " +  atendee_email + ". Please check your spam for en email with the following link: "
         setResponseBody(message); // Save the response body to state
         setIsDialogOpen(true);
         
