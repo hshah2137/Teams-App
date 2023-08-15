@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav, NavLink} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CCDLogo from './assets/CCDlogo.png'
 
 const ColorSchemesExample = () => {
@@ -35,11 +35,24 @@ const ColorSchemesExample = () => {
         
     }, [location])
 
+    const navigate = useNavigate();
 
 
     const handleNavLinkClick = (page: string) => {
         setSelected(page);
     };
+
+    const goToJoin = () =>{
+        navigate('/input')
+    }
+
+    const goToCreate = () =>{
+        navigate('/validateUser')
+    }
+
+    const goToHome = () =>{
+        navigate('/')
+    }
 
     const text_style = {
         fontWeight: '550' 
@@ -54,29 +67,35 @@ const ColorSchemesExample = () => {
             
                 <Navbar bg="dark" data-bs-theme="dark">
                     <Container>
-                        <Navbar.Brand href="/"><img src={CCDLogo} width="45" height ="45" /></Navbar.Brand>
+                        <Navbar.Brand onClick = {() => {handleNavLinkClick('home')
+                                                goToHome()}}>
+                                            <img src={CCDLogo} width="45" height ="45" />
+                        </Navbar.Brand>
                         <Nav className="me-auto">
                             <NavLink
-                                href="/"
+                                //href="/"
                                 className={`nav-link ${selected === 'home' ? 'selected' : ''}`}
                                 style={{ ...text_style, ...(selected === 'home' ? selectedLinkStyle : {}) }}
-                                onClick={() => handleNavLinkClick('home')}
+                                onClick={() => {handleNavLinkClick('home')
+                                                goToHome()}}
                             >
                                 Home
                             </NavLink>
                             <NavLink
-                                href="/input"
+                                //href="/input"
                                 className={`nav-link ${selected === 'join' ? 'selected' : ''}`}
                                 style={{ ...text_style, ...(selected === 'join' ? selectedLinkStyle : {}) }}
-                                onClick={() => handleNavLinkClick('join')}
+                                onClick={() => {handleNavLinkClick('join')
+                                                goToJoin()}}
                             >
                                 Join Meeting
                             </NavLink>
                             <NavLink
-                                href="/validateUser"
+                                //href="/validateUser"
                                 className={`nav-link ${selected === 'create' ? 'selected' : ''}`}
                                 style={{ ...text_style, ...(selected === 'create' ? selectedLinkStyle : {}) }}
-                                onClick={() => handleNavLinkClick('create')}
+                                onClick={() => {handleNavLinkClick('create')
+                                                goToCreate()}}
                             >
                                 Create Meeting
                             </NavLink>
