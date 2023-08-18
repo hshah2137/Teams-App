@@ -6,6 +6,7 @@ import {
   useAzureCommunicationCallWithChatAdapter,
 } from '@azure/communication-react';
 import { useState, useMemo, useEffect } from 'react';
+import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
 
 const JoinCallPage = () => {
 
@@ -86,7 +87,7 @@ const JoinCallPage = () => {
     if (callAdapter) {
         return (
           
-            
+            <FluentProvider theme={teamsLightTheme}>
             <div className="wrapper" style ={{backgroundColor: '#F5F5F5', height: "90vh", padding: "5%"
           }}>
               <CallWithChatComposite
@@ -95,7 +96,7 @@ const JoinCallPage = () => {
                 
               />
             </div>
-          
+          </FluentProvider>
         );
       }
       if (!credential && requestMade === true) {
