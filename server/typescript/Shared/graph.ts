@@ -54,7 +54,7 @@ async function createNewMeetingAsync(userId, start, end, subject) {
      
 export default createNewMeetingAsync;
 
-export async function sendEmail() {
+/*export async function sendEmail() {
   ensureGraphForAppOnlyAuth();
   const sendMail = {
     message: {
@@ -76,7 +76,7 @@ export async function sendEmail() {
             address: 'danas@contoso.onmicrosoft.com'
           }
         }
-      ]*/
+      ]* /
     },
     //saveToSentItems: 'false'
   };
@@ -84,7 +84,7 @@ export async function sendEmail() {
   const response = await appGraphClient.api('/users/29bab168-0262-4142-b8f9-8543bc0f4249/sendMail')
     .post(sendMail);
     console.log(response)
-}
+}*/
 
 export async function getUsersAsync(email: string | string[]): Promise<PageCollection> {
   ensureGraphForAppOnlyAuth();

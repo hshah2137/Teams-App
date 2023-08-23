@@ -3,7 +3,7 @@ import createNewMeetingAsync from '../Shared/graph';
 import * as querystring from 'querystring';
 import express, { Request, Response } from 'express';
 import * as nodemailer from 'nodemailer';
-import { sendEmail } from "../Shared/graph";
+//import { sendEmail } from "../Shared/graph";
 
 let teamsMeetingLink;
 

@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var graph_1 = require("../Shared/graph");
 var querystring = require("querystring");
 var nodemailer = require("nodemailer");
+//import { sendEmail } from "../Shared/graph";
 var teamsMeetingLink;
 var httpTrigger = function (context, req) {
     return __awaiter(this, void 0, void 0, function () {
