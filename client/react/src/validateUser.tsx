@@ -59,7 +59,7 @@ const CheckUser = () => {
       
     }
     // API call to validate whether the user's full name and email match a name and email in the database
-    // if they are valid, it navigates to /createCall, otherwise an error modal appears
+    // if they are valid, it navigates to the /createCall page, otherwise an error modal appears
   const getUser = async (email: String, name: String)=>{
     try{
         const name_lower = name.toLowerCase()
