@@ -37,7 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUsersAsync = void 0;
-var dateTimeFormat_1 = require("./dateTimeFormat");
 var identity_1 = require("@azure/identity");
 var microsoft_graph_client_1 = require("@microsoft/microsoft-graph-client");
 var azureTokenCredentials_1 = require("@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials");
@@ -59,17 +58,11 @@ function ensureGraphForAppOnlyAuth() {
 }
 function createNewMeetingAsync(userId, start, end, subject) {
     return __awaiter(this, void 0, void 0, function () {
-        var startTime, endTime, newMeeting, event, newEvent;
+        var newMeeting, event, newEvent;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     ensureGraphForAppOnlyAuth();
-                    return [4 /*yield*/, (0, dateTimeFormat_1.startDateTimeAsync)()];
-                case 1:
-                    startTime = _a.sent();
-                    return [4 /*yield*/, (0, dateTimeFormat_1.endDateTimeAsync)()];
-                case 2:
-                    endTime = _a.sent();
                     newMeeting = "/users/".concat(userId, "/calendar/events");
                     event = {
                         subject: subject,
@@ -81,19 +74,10 @@ function createNewMeetingAsync(userId, start, end, subject) {
                             dateTime: end,
                             timeZone: 'UTC'
                         },
-                        attendees: [
-                            {
-                                emailAddress: {
-                                    address: 'JoniS@hshah2136.onmicrosoft.com',
-                                    //name: 'Dana Swope'
-                                },
-                                type: 'Required'
-                            }
-                        ],
                         isOnlineMeeting: true
                     };
                     return [4 /*yield*/, appGraphClient.api(newMeeting).post(event)];
-                case 3:
+                case 1:
                     newEvent = _a.sent();
                     return [2 /*return*/, newEvent];
             }
@@ -101,37 +85,6 @@ function createNewMeetingAsync(userId, start, end, subject) {
     });
 }
 exports.default = createNewMeetingAsync;
-/*export async function sendEmail() {
-  ensureGraphForAppOnlyAuth();
-  const sendMail = {
-    message: {
-      subject: 'Meet for lunch?',
-      body: {
-        contentType: 'Text',
-        content: 'The new cafeteria is open.'
-      },
-      toRecipients: [
-        {
-          emailAddress: {
-            address: 'hamzah@hshah2136.onmicrosoft.com'
-          }
-        }
-      ],
-      /*ccRecipients: [
-        {
-          emailAddress: {
-            address: 'danas@contoso.onmicrosoft.com'
-          }
-        }
-      ]* /
-    },
-    //saveToSentItems: 'false'
-  };
-  
-  const response = await appGraphClient.api('/users/29bab168-0262-4142-b8f9-8543bc0f4249/sendMail')
-    .post(sendMail);
-    console.log(response)
-}*/
 function getUsersAsync(email) {
     return __awaiter(this, void 0, void 0, function () {
         var users;
@@ -140,8 +93,6 @@ function getUsersAsync(email) {
             users = appGraphClient.api('/users')
                 .select(['displayName', 'id', 'mail'])
                 .filter("imAddresses/any(i:i eq '".concat(email, "')"))
-                //.top(25)
-                //.orderby('displayName')
                 .get();
             return [2 /*return*/, users];
         });

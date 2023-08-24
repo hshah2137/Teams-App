@@ -1,17 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import createNewMeetingAsync from '../Shared/graph';
 import * as querystring from 'querystring';
-import express, { Request, Response } from 'express';
 import * as nodemailer from 'nodemailer';
-//import { sendEmail } from "../Shared/graph";
 
 let teamsMeetingLink;
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
     context.log("Request received");
-    //const userId = process.env.USER_ID;
-    //context.log('UserId', userId);
-
     const formData = querystring.parse(req.body);
     console.log('form', formData)
     const subject = formData.subject
@@ -47,7 +42,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     console.log(formattedStartDate)
     
     context.res = {
-        // status: 200, /* Defaults to 200 */
         body: meeting.onlineMeeting.joinUrl
     }
 

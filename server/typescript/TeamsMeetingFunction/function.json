@@ -16,5 +16,5 @@
     }
   ],
   
-  "scriptFile": "index.js"
+  "scriptFile": "../dist/TeamsMeetingFunction/index.js"
 }

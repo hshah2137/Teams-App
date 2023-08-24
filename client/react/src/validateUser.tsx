@@ -62,10 +62,11 @@ const CheckUser = () => {
     // if they are valid, it navigates to /createCall, otherwise an error modal appears
   const getUser = async (email: String, name: String)=>{
     try{
+        const name_lower = name.toLowerCase()
         const response = await axios.post('http://localhost:7071/api/ValidateUserFunction',
         {
           email: email,
-          name: name
+          name: name_lower
         },  {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

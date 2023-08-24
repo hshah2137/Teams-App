@@ -10,6 +10,7 @@ const listUsersAsync: AzureFunction = async function (context: Context, req: Htt
     const email = formData.email
     const userPage = await getUsersAsync(email);
     const users: User[] = userPage.value;
+
     if (users.length === 0){
       console.log('no users')
       context.res = {
@@ -17,20 +18,7 @@ const listUsersAsync: AzureFunction = async function (context: Context, req: Htt
     };
     }
     else{
-
-    
-    console.log(users)
-      // Output each user's details
-      for (const user of users) {
-        console.log(`User: ${user.displayName ?? 'NO NAME'}`);
-        console.log(`  ID: ${user.id}`);
-        console.log(`  Email: ${user.mail ?? 'NO EMAIL'}`);
-      }
-  
-      // If @odata.nextLink is not undefined, there are more users
-      // available on the server
-      const moreAvailable = userPage['@odata.nextLink'] != undefined;
-      console.log(`\nMore users available? ${moreAvailable}`);
+            
       context.res = {
         body: { users: users}
     };
