@@ -51,7 +51,7 @@ const JoinCallPage = () => {
               
         //Call Azure Function to get the ACS user identity and token
         try {
-          const res = await fetch('http://localhost:7071/api/ACSTokenFunction');
+          const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
           const user = await res.json();
           SetrequestStatus(true)
           setUserId(user.userId);

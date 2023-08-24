@@ -63,7 +63,7 @@ const CheckUser = () => {
   const getUser = async (email: String, name: String)=>{
     try{
         const name_lower = name.toLowerCase()
-        const response = await axios.post('http://localhost:7071/api/ValidateUserFunction',
+        const response = await axios.post(process.env.REACT_APP_VALIDATE_USER_FUNCTION as string,
         {
           email: email,
           name: name_lower

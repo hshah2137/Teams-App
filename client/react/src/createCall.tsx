@@ -209,7 +209,7 @@ const CreateCall = () => {
   // if the connection is bad
   const getUser = async (email: String, subject: String, start: String, end: String)=>{
     try{
-        const response = await axios.post('http://localhost:7071/api/RetrieveUsersFunction',
+        const response = await axios.post(process.env.REACT_APP_RETRIEVE_USERS_FUNCTION as string,
         {
           email: email,
           
@@ -248,7 +248,7 @@ const CreateCall = () => {
   // they wish to do so
   const createMeeting = async (userId: String, subject: String, start: String, end: String, name: string, email: string, atendee: String)=>{
     try{
-        const response = await axios.post('http://localhost:7071/api/TeamsMeetingFunction',
+        const response = await axios.post(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string,
         { 
           userId: userId,
           subject: subject,
