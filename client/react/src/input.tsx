@@ -103,7 +103,7 @@ const InputPage = () => {
               <VideoChat24Regular style={{ display: "inline-block", marginRight: "10px"}}/>
 
               <Textarea value={link} onChange={handleInputChange} style = {{ width: "75vw", resize: 'none'}} rows={5}
-                placeholder='Enter your Teams meeting Link' />
+                placeholder='Enter your Teams meeting link' />
                 
               </div>
 

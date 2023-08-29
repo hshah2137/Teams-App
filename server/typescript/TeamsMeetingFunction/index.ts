@@ -58,9 +58,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         to: user_email,
         subject: 'Meeting Notification',
         text: 'Your meeting has been created from ' +
-        formattedStartDate + ' ' + formattedStartTime
-        + ' to ' + formattedEndDate + ' ' + formattedEndTime
-        + '. Use the link below to join the meeting: \n' + meeting.onlineMeeting.joinUrl,
+        formattedStartDate + ' ' + formattedStartTime + ' '
+        + timeZone +' to ' + formattedEndDate + ' ' + formattedEndTime + ' '
+        + timeZone + '. Use the link below to join the meeting: \n' + meeting.onlineMeeting.joinUrl,
       };
       
       transporter.sendMail(mailOptions_creator, function(error, info){
@@ -76,9 +76,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         to: atendee,
         subject: 'Meeting Notification',
         text: 'You have been invited to a meeting created by '+ userName + ', ' + user_email + '. This meeting is from ' +
-          formattedStartDate + ' ' + formattedStartTime
-          + ' to ' + formattedEndDate + ' ' + formattedEndTime + 
-        '. \n You can join this meeting with the following link: \n' + meeting.onlineMeeting.joinUrl,
+          formattedStartDate + ' ' + formattedStartTime + ' '
+          + timeZone + ' to ' + formattedEndDate + ' ' + formattedEndTime + ' '
+          + timeZone + '. \n You can join this meeting with the following link: \n' + meeting.onlineMeeting.joinUrl,
       };
       
       transporter.sendMail(mailOptions_atendee, function(error, info){
