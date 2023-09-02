@@ -94,7 +94,7 @@ const CheckUser = () => {
   }
 
   return(
-    <FluentProvider theme={teamsLightTheme} style ={{marginTop: '3vh', backgroundColor: '#F5F5F5', textAlign: 'left'}}>
+    <FluentProvider theme={teamsLightTheme} style ={{marginTop: '3vh', backgroundColor: '#F5F5F5', textAlign: 'left', marginBottom: '3vh'}}>
 
       <div>
         <h4 style = {{alignItems: 'center', marginLeft: '5vh' }}>Confirm your details to create a meeting</h4>

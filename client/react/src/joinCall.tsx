@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import {  CallWithChatComposite, fromFlatCommunicationIdentifier, useAzureCommunicationCallWithChatAdapter} from '@azure/communication-react';
 import { useState, useMemo, useEffect } from 'react';
 import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
+import axios from 'axios';
 
 const JoinCallPage = () => {
   
@@ -51,8 +52,9 @@ const JoinCallPage = () => {
               
         //Call Azure Function to get the ACS user identity and token
         try {
-          const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
-          const user = await res.json();
+          const res = await axios.get(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+          const user = await res.data;
+          console.log(res.data)
           SetrequestStatus(true)
           setUserId(user.userId);
           setToken(user.token);
@@ -73,7 +75,7 @@ const JoinCallPage = () => {
     if (callAdapter) {
         return (
           <FluentProvider theme={teamsLightTheme}>
-            <div className="wrapper" style ={{backgroundColor: '#F5F5F5', height: "90vh", padding: "5%"}}>
+            <div className="wrapper" style ={{backgroundColor: '#F5F5F5', height: "90vh", padding: "2.5%"}}>
               <CallWithChatComposite
                 adapter={callAdapter}
               />

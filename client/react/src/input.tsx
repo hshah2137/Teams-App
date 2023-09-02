@@ -84,7 +84,7 @@ const InputPage = () => {
  
     return(
         <FluentProvider theme = {teamsLightTheme} style = {{backgroundColor: '#F5F5F5'}}>
-          <div style = {{marginTop: "3vh"}}>
+          <div style = {{marginTop: "3vh", marginBottom: "3vh"}}>
 
             <h4 style = {{display: 'flex',  marginLeft: '5vw', textAlign: 'left'}}>Enter your name and a teams link to join a meeting</h4>
 

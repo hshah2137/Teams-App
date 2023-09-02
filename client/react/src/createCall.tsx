@@ -169,19 +169,20 @@ const CreateCall = () => {
     setTitle("")
     setResponseBody(""); 
     setLink("")
-    if (EmailValidator.validate(atendee_email)){
-      if (date && startTime && endDate && endTime !== undefined && subject !== "" && subject!= null && atendee_email !== "" && atendee_email != null){
-      const finale_start = convertDateTime(date, startTime);
-      const finale_end = convertDateTime(endDate, endTime);
+    
+    if (date && startTime && endDate && endTime !== undefined && subject !== "" && subject!= null && atendee_email !== "" && atendee_email != null){
+      if (EmailValidator.validate(atendee_email)){
+        const finale_start = convertDateTime(date, startTime);
+        const finale_end = convertDateTime(endDate, endTime);
 
-      const date_start = new Date(finale_start)
-      const date_end = new Date(finale_end)
+        const date_start = new Date(finale_start)
+        const date_end = new Date(finale_end)
 
-      if (date_start >= date_end){
-        setTitle("Something went wrong")
-        setResponseBody("The start date cannot be after the end date.");
-        setIsDialogOpen(true);
-      }
+        if (date_start >= date_end){
+          setTitle("Something went wrong")
+          setResponseBody("The start date cannot be after the end date.");
+          setIsDialogOpen(true);
+        }
       else{
         console.log("success")
         console.log(subject)
@@ -189,6 +190,11 @@ const CreateCall = () => {
         console.log(finale_end)
         getUser(user_email, subject, finale_start, finale_end)
       }
+    }
+    else{
+      setTitle("Invalid Email")
+      setResponseBody("We are sorry. '" + atendee_email + "' is not a valid email"); 
+    }
     }
 
     else {
@@ -198,12 +204,6 @@ const CreateCall = () => {
       console.log("Please fill all the fields")
     }
     }
-    else{
-      setTitle("Invalid Email")
-      setResponseBody("We are sorry. '" + atendee_email + "' is not a valid email"); 
-    }
-     
-  }
 
   // This function makes an API call to retrieve the Azure ID of the creator's email. An error message can occur
   // if the connection is bad
@@ -308,7 +308,7 @@ const CreateCall = () => {
 
       </div>
       
-      <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '4vh',}}>
+      <div style = {{display: 'flex', marginTop: '4vh', marginLeft:'7.5vw', justifyContent:'center', alignItems: 'center', marginRight:'7.5vw'}}>
 
         <p style={{ marginRight: "10px", marginTop: '12px' }}>Start Date:</p>
 
@@ -321,7 +321,7 @@ const CreateCall = () => {
           placeholder="Select a date..."
           allowTextInput
           onValidationResult={(data) => setError(data.error)}
-          style={{ width: '25vw'}}
+          style={{ width: '20vw'}}
           underlined={true}
           isMonthPickerVisible={false}
           onSelectDate={handleDateChange}
@@ -334,7 +334,7 @@ const CreateCall = () => {
         <Dropdown
           aria-labelledby={dropdownId}
           placeholder="Select a start time"
-          style = {{width: '20vw', maxHeight: '10vh'}}
+          //style = {{width: '1vw'}}
           onOptionSelect={(ev, option) => handleStartTimeChange(option?.optionValue || "")}>
           
           {options.map((option) => (
@@ -349,7 +349,7 @@ const CreateCall = () => {
 
       </div>
 
-      <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '3.5vh'}}>
+      <div style = {{display: 'flex',justifyContent:'center', alignItems: 'center', marginTop: '3.5vh',  marginLeft:'7.5vw',marginRight:'7.5vw'}}>
 
         <p style={{ display: "inline-block", marginRight: "15px", marginTop: '12px' }}>End Date:</p>
         <FluentProvider theme={webLightTheme}>
@@ -362,19 +362,19 @@ const CreateCall = () => {
           placeholder="Select a date..."
           allowTextInput
           onValidationResult={(data) => setEndError(data.error)}
-          style = {{width: '25vw'}}
+          style = {{width: '20vw'}}
           underlined = {true}
           isMonthPickerVisible = {false}
           onSelectDate={handleEndDateChange}/>
         </Field>
         </FluentProvider>
     
-        <p style={{ display: "inline-block", marginTop: '12px', marginRight: "15px", marginLeft: "5vw"}}>End Time:</p>
+        <p style={{ display: "inline-block", marginTop: '12px', marginRight: "10px", marginLeft: "5vw"}}>End Time:</p>
       
         <Dropdown
           aria-labelledby={dropdownId}
           placeholder="Select an end time"
-          style = {{width: '20vw', maxHeight: '10vh'}}
+          style = {{width: '15vw'}}
           onOptionSelect={(ev, option) => handleEndTimeChange(option?.optionValue || "")}>
 
           {options.map((option) => (
@@ -382,7 +382,6 @@ const CreateCall = () => {
               {option}
             </Option>
           ))}
-
         </Dropdown>
 
       </div>
