@@ -193,7 +193,8 @@ const CreateCall = () => {
     }
     else{
       setTitle("Invalid Email")
-      setResponseBody("We are sorry. '" + atendee_email + "' is not a valid email"); 
+      setResponseBody("We are sorry. '" + atendee_email + "' is not a valid email");
+      setIsDialogOpen(true);
     }
     }
 

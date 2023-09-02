@@ -45,11 +45,18 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         body: meeting.onlineMeeting.joinUrl
     }
 
+    const email = process.env.EMAIL;
+    const password = process.env.APP_PASSWORD;
+    console.log(email as string);
+    console.log(password as string)
+
      const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
-          user: 'ixn.project@gmail.com',
-          pass: 'rclnxpoxybheyjes',
+          user: email,
+          pass: password,
         },
       });
     
