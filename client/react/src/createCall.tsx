@@ -374,7 +374,7 @@ const CreateCall = () => {
         <Dropdown
           aria-labelledby={dropdownId}
           placeholder="Select an end time"
-          style = {{width: '15vw'}}
+          //style = {{width: '15vw'}}
           onOptionSelect={(ev, option) => handleEndTimeChange(option?.optionValue || "")}>
 
           {options.map((option) => (
