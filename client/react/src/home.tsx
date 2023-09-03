@@ -86,7 +86,8 @@ const HomePage = () => {
             <div style = {{display: 'flex', justifyContent:'flex-start', alignItems: 'flex-start', textAlign: 'left', marginLeft: '5vh'}}>
 
                 <ol style={{ listStyleType: 'disc', listStylePosition: 'inside', }}>
-                    <li>Join a meeting by entering your name and a teams meeting link</li>  
+                    <li>Join a meeting by entering your name and a teams meeting link</li>
+                    <li>Please note: You join the call as a guest, and a user needs to admit you into the call via Teams</li>
                 </ol>
             </div>
 
