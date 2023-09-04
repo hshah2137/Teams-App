@@ -1,14 +1,16 @@
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Textarea, FluentProvider, teamsLightTheme, Input, useId, Divider, Dialog,
         DialogTrigger, DialogSurface, DialogTitle, DialogBody, DialogActions, DialogContent, Button} from "@fluentui/react-components";
 import VideoChat24Regular from '@fluentui/react-icons/lib/esm/components/Video24Regular';
 import Guest24Regular from '@fluentui/react-icons/lib/esm/components/Guest24Regular';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import axios from 'axios';
 
 const InputPage = () => {
 
-    const [link, setLink] = useState('');
-    const [displayName, setDisplay] = useState('');
+    const [link, setLink] = useState<string>('');
+    const [displayName, setDisplay] = useState<string>('');
     const navigate = useNavigate();
 
     //Function for setting the value for the link
@@ -50,7 +52,26 @@ const InputPage = () => {
     const modalHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
         setIsDialogOpen(false);
     }
+    // Function that retrieves the user identity and access token 
+    const retrieveToken = async () => {
+      try {
+        const res = await axios.get(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+        const user = await res.data;
+        console.log(res.data)
+        
+        console.log("user token: " + user.token);
+        const userId = user.userId;
+        const token = user.token;
+        navigate('/joinCall', {state: {link, displayName, userId, token}})
 
+      }
+      catch (error) {
+        setTitle('Connection Issues')
+        setResponseBody("Sorry, there are connection problems at the moment. Please try again later")
+        console.log(error)
+      }
+    }
+    
     //Function that is called when the 'join' button is clicked
     // It checks whether the input fields are null, and whether a valid link is provided
     // If a name and valid link are provided, it will proceed to /joinCall
@@ -77,8 +98,9 @@ const InputPage = () => {
             setIsDialogOpen(true)
             
         }
-        else if (displayName !== "" && link !== "" && displayName !== null){       
-            navigate('/joinCall', {state: {link, displayName}})
+        else if (displayName !== "" && link !== "" && displayName !== null){
+            retrieveToken()
+            
         }
     }
  

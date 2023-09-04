@@ -35,6 +35,17 @@ function ensureAuthentication() {
   }
 }
 
+export async function getUsersAsync(email: string | string[]): Promise<PageCollection> {
+  ensureAuthentication();
+  // Ensure client isn't undefined
+  const users = appClient.api('/users')
+    .select(['displayName', 'id', 'mail'])
+    .filter(`imAddresses/any(i:i eq '${email}')`)
+    .get();
+
+    return users;
+}
+
 async function createMeeting(userId, start, end, subject) {
     ensureAuthentication();
     const newMeeting = `/users/${userId}/calendar/events`;
@@ -51,20 +62,9 @@ async function createMeeting(userId, start, end, subject) {
       },
       isOnlineMeeting: true
     };
-    
+    // send post request with meeting details
     const newEvent = await appClient.api(newMeeting).post(event);
     return newEvent;     
   }
      
 export default createMeeting;
-
-export async function getUsersAsync(email: string | string[]): Promise<PageCollection> {
-  ensureAuthentication();
-  // Ensure client isn't undefined
-  const users = appClient.api('/users')
-    .select(['displayName', 'id', 'mail'])
-    .filter(`imAddresses/any(i:i eq '${email}')`)
-    .get();
-
-    return users;
-}
