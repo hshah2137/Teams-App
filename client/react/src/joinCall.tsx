@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import {  CallWithChatComposite, fromFlatCommunicationIdentifier, useAzureCommunicationCallWithChatAdapter} from '@azure/communication-react';
 import { useState, useMemo, useEffect } from 'react';
 import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
-import { Theme, PartialTheme, Spinner, initializeIcons } from '@fluentui/react';
+import {Spinner} from '@fluentui/react';
 
 const JoinCallPage = () => {
   
@@ -54,9 +54,11 @@ const JoinCallPage = () => {
     }
   
     return (
-      <CallWithChatComposite
-        adapter={adapter}
-      />
+      <FluentProvider theme={teamsLightTheme}>
+        <CallWithChatComposite
+          adapter={adapter}
+        />
+      </FluentProvider>
     );
    
 }
