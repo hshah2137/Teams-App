@@ -1,5 +1,5 @@
 import { User } from '@microsoft/microsoft-graph-types';
-import { getUsersAsync } from '../Shared/graph';
+import { getUsersAsync } from '../Shared/graphCall';
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import * as querystring from 'querystring';
 

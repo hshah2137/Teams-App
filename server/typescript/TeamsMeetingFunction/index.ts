@@ -1,12 +1,11 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import createNewMeetingAsync from '../Shared/graph';
+import createMeeting from '../Shared/graphCall';
 import * as querystring from 'querystring';
 import * as nodemailer from 'nodemailer';
 
-let teamsMeetingLink;
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
-    context.log("Request received");
+    context.log("Meeting information received");
     const formData = querystring.parse(req.body);
     console.log('form', formData)
     const subject = formData.subject
@@ -22,7 +21,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     
     const atendee = formData.atendee
     
-    teamsMeetingLink = await createNewMeetingAsync(userId, startTime, endTime, subject);
+    const teamsMeetingLink = await createMeeting(userId, startTime, endTime, subject);
     const body = JSON.stringify(teamsMeetingLink);
     const meeting = JSON.parse(body);
     context.log("meeting:", meeting);
@@ -47,8 +46,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     const email = process.env.EMAIL;
     const password = process.env.APP_PASSWORD;
-    console.log(email as string);
-    console.log(password as string)
 
      const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
