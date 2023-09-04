@@ -1,12 +1,15 @@
 import { CommunicationIdentityClient } from '@azure/communication-identity';
+import { AzureFunction} from "@azure/functions";
 
-module.exports = async function (context, req) {
-    // Get ACS connection string from local.settings.json (or App Settings when in Azure)
+const ACSFunction: AzureFunction = async function (context, req) {
     const ACSconnectionString = process.env.ACS_CONNECTION_STRING;
-    const tokenClient = new CommunicationIdentityClient(ACSconnectionString);
-    const user = await tokenClient.createUser();
-    const userToken = await tokenClient.getToken(user, ["voip", "chat"]);
+    const client = new CommunicationIdentityClient(ACSconnectionString);
+    const user = await client.createUser();
+    const userToken = await client.getToken(user, ["voip", "chat"]);
+    console.log(userToken.token)
     context.res = {
-        body: { userId: user.communicationUserId, ...userToken }
+        body: { userId: user.communicationUserId, token: userToken.token }
     };
 }
+
+export default ACSFunction;

@@ -17,7 +17,6 @@ function ensureAuthentication() {
     
   else{
 
-  
     clientCredentials = new ClientSecretCredential(
       process.env.TENANT_ID,
       process.env.CLIENT_ID,
@@ -26,8 +25,7 @@ function ensureAuthentication() {
   }
 
   if (!appClient) {
-    const authentication = new TokenCredentialAuthenticationProvider(
-      clientCredentials, {
+    const authentication = new TokenCredentialAuthenticationProvider(clientCredentials, {
         scopes: [ 'https://graph.microsoft.com/.default' ]
       });
 
