@@ -58,9 +58,11 @@ const JoinCallPage = () => {
   
     return (
       <FluentProvider theme={teamsLightTheme}>
+        <div className="wrapper" style ={{backgroundColor: '#F5F5F5', height: "90vh", padding: "2.5%"}}>
         <CallWithChatComposite
           adapter={adapter}
         />
+        </div>
       </FluentProvider>
     );
    
