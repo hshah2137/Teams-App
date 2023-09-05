@@ -14,6 +14,7 @@ const JoinCallPage = () => {
     const [token, setToken] = useState<string>('');
     const [link, setLink] = useState<string>('');
     const [displayName, setDisplay] = useState<string>('');
+    const [endpoint, setEndpoint] = useState<string>('')
     // Immediately accesses the link and guest name from the previous page and stores them
     useEffect(()=>{
       const link_info = location.state;
@@ -22,6 +23,8 @@ const JoinCallPage = () => {
       setUser(link_info.userId);
       setToken(link_info.token);
       console.log(link_info)
+      setEndpoint(process.env.REACT_APP_ENDPOINT_URL as string)
+      console.log(process.env.REACT_APP_ENDPOINT_URL as string)
       },[location.state])
 
     // credential and adapter args are memoized to prevent unnecessary re-computations
@@ -33,13 +36,13 @@ const JoinCallPage = () => {
         }, [token]);
 
     const teamsArgs = useMemo(() => {
-      if (userID && credential && displayName && link) {
+      if (userID && credential && displayName && link && endpoint) {
           return {
             userId: fromFlatCommunicationIdentifier(userID) as CommunicationUserIdentifier,
             displayName,
             credential,
             locator: { meetingLink: link },
-            endpoint: "https://communication-resource-ixn.unitedstates.communication.azure.com/"
+            endpoint: endpoint
           }
         }
       return {};}, [userID, credential, displayName, link]);
@@ -50,7 +53,7 @@ const JoinCallPage = () => {
     //Conditional Rendering depending on the status of certain variables
     
     if (!adapter) {
-      return <Spinner label="Connecting..." />;
+      return <Spinner style={{marginTop: '3vh'}} label="Connecting..." />;
     }
   
     return (
