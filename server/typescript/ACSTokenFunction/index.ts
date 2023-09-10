@@ -19,4 +19,4 @@ const ACSFunction: AzureFunction = async function (context, req) {
     };
 }
 
-export default ACSFunction;
+module.exports = ACSFunction;
