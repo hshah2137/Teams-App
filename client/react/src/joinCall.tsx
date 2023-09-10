@@ -47,10 +47,11 @@ const JoinCallPage = () => {
         }
       return {};}, [userID, credential, displayName, link]);
     // adapter is created using information from previous page. 
-    // This is needed for the video calling component
+    // This is needed for the video calling  to render
     const adapter = useAzureCommunicationCallWithChatAdapter(teamsArgs);
 
     //Conditional Rendering depending on the status of certain variables
+    // a spinner is rendered until the credentials are created
     
     if (!adapter) {
       return <Spinner style={{marginTop: '3vh'}} label="Connecting..." />;

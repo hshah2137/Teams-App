@@ -74,7 +74,8 @@ const InputPage = () => {
     
     //Function that is called when the 'join' button is clicked
     // It checks whether the input fields are null, and whether a valid link is provided
-    // If a name and valid link are provided, it will proceed to /joinCall
+    // If a name and valid link are provided, it will proceed to /joinCall otherwise an error modal
+    // appears explaining the issue
     const clickHandle = (event: React.MouseEvent<HTMLButtonElement>) =>{
         event.preventDefault()
         if (link === ''){

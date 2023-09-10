@@ -59,7 +59,8 @@ const ColorSchemesExample = () => {
     const text_style = {
         fontWeight: '550' 
     };
-    // used to create a purple line under the selected page, consistent with Teams
+    // used to create a purple line under the selected page, consistent with Teams 
+    // and other fluent ui components
     const selectedLinkStyle = {
         borderBottom: '2px solid #7B83EB',
     };
